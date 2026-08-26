@@ -49,14 +49,24 @@ class ProductController extends Controller
     {
         $required = $updating ? 'sometimes' : 'required';
 
-        return $request->validate([
+        $data = $request->validate([
             'name' => [$required, 'string', 'max:255'],
             'category' => [$required, 'string', 'max:100'],
             'price' => [$required, 'numeric', 'min:0'],
             'stock' => [$required, 'integer', 'min:0'],
             'status' => [$required, 'in:Available,Out of Stock'],
-            'image' => ['nullable', 'string', 'max:2048', 'regex:/^(https?:\/\/|\/assets\/)/'],
+            'image' => ['nullable', 'string', 'max:2048', 'regex:/^(https?:\/\/|\/assets\/|\/storage\/)/'],
+            'image_file' => ['nullable', 'image', 'max:5120'],
             'description' => ['nullable', 'string', 'max:1000'],
         ]);
+
+        if ($request->hasFile('image_file')) {
+            $path = $request->file('image_file')->store('products', 'public');
+            $data['image'] = '/storage/'.$path;
+        }
+
+        unset($data['image_file']);
+
+        return $data;
     }
 }

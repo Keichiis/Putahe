@@ -11,8 +11,8 @@ const cancelButton = document.querySelector('#cancel');
 const closeButton = document.querySelector('.close');
 const searchInput = document.querySelector('#search');
 const imageInput = document.querySelector('#image');
+const imageFileInput = document.querySelector('#imageFile');
 const toast = document.querySelector('#toast');
-const count = document.querySelector('#count');
 const total = document.querySelector('#total');
 const available = document.querySelector('#available');
 const low = document.querySelector('#low');
@@ -81,7 +81,6 @@ function notify(message) {
 }
 
 function render(list = products) {
-    count.textContent = `${list.length} product${list.length === 1 ? '' : 's'} shown`;
     total.textContent = products.length;
     available.textContent = products.filter(product => product.status === 'Available').length;
     low.textContent = products.filter(product => product.stock > 0 && product.stock < 10).length;
@@ -183,17 +182,17 @@ form.onsubmit = async event => {
     event.preventDefault();
 
     const productId = idInput.value;
-    const data = Object.fromEntries([
-        'name', 'category', 'status', 'price', 'stock', 'image', 'description',
-    ].map(key => [key, document.querySelector(`#${key}`).value]));
+    const data = new FormData();
+    for (const key of ['name', 'category', 'status', 'price', 'stock', 'image', 'description']) {
+        data.append(key, document.querySelector(`#${key}`).value);
+    }
+    if (productId) data.append('_method', 'PUT');
+    if (imageFileInput.files[0]) data.append('image_file', imageFileInput.files[0]);
 
     const response = await fetch(productId ? `${api}/${productId}` : api, {
-        method: productId ? 'PUT' : 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-        },
-        body: JSON.stringify(data),
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: data,
     });
 
     if (response.ok) {

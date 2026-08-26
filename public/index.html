@@ -52,9 +52,8 @@
                         <p>View, search, edit, or remove products from your catalog.</p>
                     </div>
                     <div class="toolbar-controls">
-                        <label for="search">Search products</label>
+                        <!-- <label for="search">Search products</label> -->
                         <input class="search" id="search" type="search" placeholder="Name, category, or status">
-                        <span class="count" id="count" aria-live="polite">Loading products...</span>
                     </div>
                 </div>
                 <div class="table-wrap">
@@ -115,6 +114,11 @@
                 <div class="field full">
                     <label for="image">Image URL (optional)</label>
                     <input id="image" type="text" inputmode="url" placeholder="Or choose a Putahe image below">
+                </div>
+
+                <div class="field full">
+                    <label for="imageFile">Upload an image from your device (optional)</label>
+                    <input id="imageFile" type="file" accept="image/*">
                 </div>
 
                 <div class="field full">
