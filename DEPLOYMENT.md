@@ -1,13 +1,14 @@
 # Production deployment
 
-This project runs its Laravel application on Vercel and uses a hosted MySQL database from Railway.
+This project runs its Laravel application on Vercel and uses a hosted MySQL database from Aiven.
 
-## 1. Create the Railway database
+## 1. Create the Aiven database
 
-1. Create a Railway project at https://railway.app.
-2. Add a MySQL service using the MySQL template.
-3. Open the MySQL service's **Variables** tab and keep these values available:
-   `MYSQLHOST`, `MYSQLPORT`, `MYSQLDATABASE`, `MYSQLUSER`, and `MYSQLPASSWORD`.
+1. Create an account at https://console.aiven.io.
+2. Create a new **MySQL** service and choose the region and plan.
+3. Open the service's **Overview** or **Connection information** panel and keep these values available:
+   `Host`, `Port`, `Database`, `User`, and `Password`.
+4. Download Aiven's **CA certificate** from the service's connection information panel.
 
 ## 2. Configure Vercel
 
@@ -27,9 +28,10 @@ DB_PORT=${MYSQLPORT}
 DB_DATABASE=${MYSQLDATABASE}
 DB_USERNAME=${MYSQLUSER}
 DB_PASSWORD=${MYSQLPASSWORD}
+MYSQL_ATTR_SSL_CA_CONTENT=your-aiven-ca-certificate-content
 ```
 
-Replace each `${MYSQL...}` value with the matching value from Railway. Vercel does not automatically resolve Railway variable names across separate projects.
+Replace the placeholders with Aiven's connection values. Paste the complete downloaded CA certificate, including `BEGIN CERTIFICATE` and `END CERTIFICATE` lines, into Vercel as `MYSQL_ATTR_SSL_CA_CONTENT`. The Vercel entrypoint writes it to temporary storage for Laravel's MySQL client.
 
 Generate the application key locally without changing `.env`:
 
@@ -41,15 +43,15 @@ Copy the result into Vercel's `APP_KEY` variable. Do not commit `.env` or databa
 
 ## 3. Run the production migrations
 
-From PowerShell, temporarily set the Railway values in the current terminal session:
+From PowerShell, temporarily set the Aiven values in the current terminal session:
 
 ```powershell
 $env:DB_CONNECTION = 'mysql'
-$env:DB_HOST = 'your-railway-mysql-host'
-$env:DB_PORT = '3306'
-$env:DB_DATABASE = 'your-railway-database'
-$env:DB_USERNAME = 'your-railway-username'
-$env:DB_PASSWORD = 'your-railway-password'
+$env:DB_HOST = 'your-aiven-mysql-host'
+$env:DB_PORT = 'your-aiven-mysql-port'
+$env:DB_DATABASE = 'your-aiven-database'
+$env:DB_USERNAME = 'your-aiven-username'
+$env:DB_PASSWORD = 'your-aiven-password'
 php artisan migrate --force
 ```
 
