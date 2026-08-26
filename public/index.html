@@ -1,0 +1,153 @@
+<!doctype html><html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#9d1718">
+        <title>Putahe | Product Management</title>
+        <link rel="stylesheet" href="/style.css">
+    </head>
+    <body>
+        <header class="top">
+            <div class="top-inner">
+                <a class="logo" href="/" aria-label="Putahe home">
+                    <img src="/assets/logo.png" alt="Putahe">
+                </a>
+                <div class="crumb">| Product List Management</div>
+            </div>
+        </header>
+
+        <main>
+            <section class="hero" aria-labelledby="page-title">
+                <div class="hero-copy">
+                    <div class="eyebrow">Putahe kitchen</div>
+                    <h1 id="page-title">Manage your products</h1>
+                    <p>Keep every lutong-bahay favorite accurate and ready for your customers.</p>
+                </div>
+                <div class="hero-art" aria-hidden="true">
+                    <img class="hero-cloth" src="/assets/hero-cloth.webp" alt="">
+                    <img class="hero-dish" src="/assets/hero-bilao.webp" alt="">
+                </div>
+                <button class="primary action-add" id="add" type="button">+ Add product</button>
+            </section>
+
+            <section class="summary" aria-label="Product summary">
+                <div class="metric">
+                    <small>Total products</small>
+                    <strong id="total">0</strong>
+                </div>
+                <div class="metric">
+                    <small>Available products</small>
+                    <strong id="available">0</strong>
+                </div>
+                <div class="metric">
+                    <small>Low stock products</small>
+                    <strong id="low">0</strong>
+                </div>
+            </section>
+
+            <section class="panel" aria-labelledby="catalog-title">
+                <div class="toolbar">
+                    <div class="toolbar-copy">
+                        <h2 id="catalog-title">Product list</h2>
+                        <p>View, search, edit, or remove products from your catalog.</p>
+                    </div>
+                    <div class="toolbar-controls">
+                        <label for="search">Search products</label>
+                        <input class="search" id="search" type="search" placeholder="Name, category, or status">
+                        <span class="count" id="count" aria-live="polite">Loading products...</span>
+                    </div>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <caption class="sr-only">Product catalog and management actions</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Product &amp; Image</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Stock Quantity</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Edit / Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rows"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <dialog id="dialog" aria-labelledby="title">
+            <div class="modal-head">
+                <h2 id="title">Add product</h2>
+                <button class="close" type="button" aria-label="Close dialog">&times;</button>
+            </div>
+            <form class="form" id="form">
+                <input id="id" type="hidden">
+
+                <div class="field full">
+                    <label for="name">Product name</label>
+                    <input id="name" required>
+                </div>
+
+                <div class="field">
+                    <label for="category">Category</label>
+                    <input id="category" required placeholder="e.g. Pork Dishes">
+                </div>
+
+                <div class="field">
+                    <label for="status">Status</label>
+                    <select id="status">
+                        <option>Available</option>
+                        <option>Out of Stock</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="price">Price (PHP)</label>
+                    <input id="price" type="number" min="0" step=".01" required>
+                </div>
+
+                <div class="field">
+                    <label for="stock">Stock quantity</label>
+                    <input id="stock" type="number" min="0" required>
+                </div>
+
+                <div class="field full">
+                    <label for="image">Image URL (optional)</label>
+                    <input id="image" type="text" inputmode="url" placeholder="Or choose a Putahe image below">
+                </div>
+
+                <div class="field full">
+                    <span id="image-label" class="field-label">Choose from Putahe assets</span>
+                    <div class="photo-picker" id="photoPicker" aria-labelledby="image-label"></div>
+                </div>
+
+                <div class="field full">
+                    <label for="description">Description (optional)</label>
+                    <textarea id="description"></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button class="secondary" type="button" id="cancel">Cancel</button>
+                    <button class="primary" type="submit">Save product</button>
+                </div>
+            </form>
+        </dialog>
+
+        <dialog id="confirmDialog" class="confirm-dialog" aria-labelledby="confirmTitle">
+            <div class="confirm-icon" aria-hidden="true">!</div>
+            <h2 id="confirmTitle">Delete product?</h2>
+            <p id="confirmMessage">This product will be permanently removed from your catalog.</p>
+            <form method="dialog" class="confirm-actions">
+                <button class="secondary" value="cancel">Cancel</button>
+                <button class="danger-button" value="confirm">Delete product</button>
+            </form>
+        </dialog>
+
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+        <script>
+            window.PUTAHE_API_URL = '';
+        </script>
+        <script src="/script.js"></script>
+    </body>
+</html>
