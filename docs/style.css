@@ -310,4 +310,4 @@ dialog::backdrop { background: rgba(43, 14, 10, .58); backdrop-filter: blur(3px)
     .hero-dish { animation: none; }
 }
 
-.preview-notice{display:flex;align-items:center;flex-wrap:wrap;gap:8px 18px;max-width:1200px;margin:18px auto 0;padding:14px 20px;background:#fff5dc;border:1px solid #e7d4ad;border-radius:10px;color:#5e3227;font-size:13px}.preview-notice a{color:#9d1718;font-weight:600}.preview-notice span{flex:1;min-width:220px}button:disabled{opacity:.5;cursor:not-allowed}@media(max-width:1240px){.preview-notice{margin-left:20px;margin-right:20px}}
+button:disabled{opacity:.5;cursor:not-allowed}
