@@ -2,6 +2,10 @@
 
 A restaurant product and category management project with a Laravel API and a web frontend.
 
+**[Open the website preview](https://keichiis.github.io/Putahe/)**
+
+The public preview shows a sample menu with search. Product editing and database features are available when running the Laravel project locally.
+
 ## Project folders
 
 - `backend/`: Laravel application, API routes, migrations, and tests.
@@ -33,5 +37,7 @@ Laravel serves the frontend from `frontend/public/` directly; no local directory
 ## Sharing
 
 This repository shares the project source. Running the application online requires a separate PHP application host and database; GitHub Pages cannot run the Laravel backend.
+
+GitHub Pages serves the read-only preview from `docs/`. After changing the frontend, rebuild the preview with `node frontend/pages/build.mjs` and commit the updated `docs/` files.
 
 Local environment files, dependencies, databases, runtime files, and logs are excluded from Git. Install dependencies and configure a local `.env` after cloning.
