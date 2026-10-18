@@ -12,8 +12,8 @@ A restaurant product and category management project with a Laravel API and a we
 Requires PHP 8.3 or newer with the extensions required by Composer, Composer, and SQLite support (or a configured MySQL database).
 
 ```powershell
-git clone https://github.com/comediajohndave8-commits/ProductManagement.git
-cd ProductManagement/backend
+git clone https://github.com/Keichiis/Putahe.git
+cd Putahe/backend
 composer install
 Copy-Item .env.example .env
 php artisan key:generate
