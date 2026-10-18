@@ -40,4 +40,6 @@ This repository shares the project source. Running the application online requir
 
 GitHub Pages serves the read-only preview from `docs/`. After changing the frontend, rebuild the preview with `node frontend/pages/build.mjs` and commit the updated `docs/` files.
 
+For the full website with a database, product/category editing, and image uploads, see [the backend hosting setup](DEPLOYMENT.md). A Dockerfile and Railway configuration are included. Backend deployment requires a connected hosting account.
+
 Local environment files, dependencies, databases, runtime files, and logs are excluded from Git. Install dependencies and configure a local `.env` after cloning.

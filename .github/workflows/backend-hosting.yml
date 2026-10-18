@@ -1,0 +1,40 @@
+name: Check backend hosting
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - Dockerfile
+      - .dockerignore
+      - railway.toml
+      - backend/**
+      - frontend/public/**
+      - deploy/**
+      - .github/workflows/backend-hosting.yml
+
+permissions:
+  contents: read
+
+jobs:
+  container:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Build production container
+        run: docker build --tag putahe-ci .
+      - name: Start with persistent storage
+        run: |
+          docker volume create putahe-ci-data
+          docker run --detach --name putahe-ci --publish 8080:8080 \
+            --env APP_KEY="base64:$(openssl rand -base64 32)" \
+            --env APP_URL=http://localhost:8080 \
+            --volume putahe-ci-data:/data putahe-ci
+      - name: Check editing, uploads, and restart persistence
+        run: node deploy/smoke-test.mjs
+      - name: Container logs
+        if: always()
+        run: docker logs putahe-ci || true
